@@ -15,26 +15,25 @@ public class Main {
     public static CheckOptionsPanel frame;
     public static JTextArea ta;
     public static String textAreaMsg;
-    public static JScrollPane scrollPane;
-    public static final int WIDTH = 355, HEIGHT = 250;
-
-            
     static Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        
+    public static final int WIDTH = dim.width / 2, HEIGHT = dim.height / 2;
+
+
+
     public static void main(String[] args) throws IOException
     {
         Insets textAreaPad = new Insets(3,3,3,0);
         String mainTitle = "Darts.Game";
         CheckingAccount.dataStore = new Vector<CheckingAccount>();
         textAreaMsg = "Welcome to the Game of Darts";
-        frame = new CheckOptionsPanel(mainTitle);
+        frame = new CheckOptionsPanel(mainTitle, new Dimension(WIDTH, HEIGHT));
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setSize(CheckOptionsPanel.HEIGHT, CheckOptionsPanel.WIDTH);
+
         ta = new JTextArea(textAreaMsg);
         ta.setEditable(false);
         ta.setBackground(Color.WHITE);
         ta.setMargin(textAreaPad);
-        ta.setFont(new Font("Courier New", Font.PLAIN, 12));
+        ta.setFont(new Font("Courier New", Font.PLAIN, 12*dim.width/WIDTH));
         JScrollPane scrollPane = new JScrollPane(ta);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         frame.getContentPane().add(scrollPane);

@@ -13,6 +13,8 @@ package finalproject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
+import java.util.Vector;
 
 public class CheckOptionsPanel extends JFrameL //CheckOptionFrame(now a frame not a panel
 {
@@ -20,240 +22,146 @@ public class CheckOptionsPanel extends JFrameL //CheckOptionFrame(now a frame no
     private JMenuItem readFile, writeFile, addAcct, listAcctTrans, listCheck, 
                       listDep, findAcct, listAcct, addTrans, playDarts;
     private JMenuBar bar;
-    private String readFileStr = "Load File", writeFileStr = "Save File",
+    private final String readFileStr = "Load File", writeFileStr = "Save File",
             addTransStr = "Add Transactions", addAcctStr = "Add New Account", 
             listAcctTransStr = "List Account Transactions",
             listCheckStr = "List All Checks", listDepStr = "List All Deposits",
             findAcctStr = "Find Account", fileStr = "File", acctStr = "Account",
             listingAcctStr = "List All Accounts", transStr = "Transactions", 
             miscStr = "Misc.", dartsStr = "Play Darts!";
-    private String emptyList = "No accounts on file!\nUse Add Account "
+    private final String emptyList = "No accounts on file!\nUse Add Account "
                             + "option to start a new database\nor use Load File "
                             + "option to open a database.";
-    
-//    private final JLabel prompt;
-//    private final JRadioButton one, two, three, four, five, six, seven;
+
+    private class MenuContent {
+        public JMenu menu;
+        public Vector<JMenuItem> items;
+        MenuContent(String name){
+            this.menu = new JMenu(name);
+            this.items = new Vector<>();
+        }
+    }
 
    //-----------------------------------------------------------------
    //  Sets up a panel with a label and a set of radio buttons
    //  that present options to the user.
    //-----------------------------------------------------------------
     
-    public CheckOptionsPanel(String title)
+    public CheckOptionsPanel(String title, Dimension dim)
     {
         super(title);
         MenuListener ml = new MenuListener();
 
-        fileMenu = new JMenu(fileStr);
-        
-        readFile = new JMenuItem(readFileStr);
-        readFile.addActionListener(ml);
-        fileMenu.add(readFile);
-        
-        writeFile = new JMenuItem(writeFileStr);
-        writeFile.addActionListener(ml);
-        fileMenu.add(writeFile);
-        
-        acctMenu = new JMenu(acctStr);
-        
-        addAcct = new JMenuItem(addAcctStr);
-        addAcct.addActionListener(ml);
-        acctMenu.add(addAcct);
-        
-        listAcctTrans = new JMenuItem(listAcctTransStr);
-        listAcctTrans.addActionListener(ml);
-        acctMenu.add(listAcctTrans);
-        
-        listCheck = new JMenuItem(listCheckStr);
-        listCheck.addActionListener(ml);
-        acctMenu.add(listCheck);
-        
-        listDep = new JMenuItem(listDepStr);
-        listDep.addActionListener(ml);
-        acctMenu.add(listDep);
-        
-        findAcct = new JMenuItem(findAcctStr);
-        findAcct.addActionListener(ml);
-        acctMenu.add(findAcct);
-        //new list accounts sorted
-        listAcct = new JMenuItem(listingAcctStr);
-        listAcct.addActionListener(ml);
-        acctMenu.add(listAcct);
-        
-        transMenu = new JMenu(transStr);
-        
-        addTrans = new JMenuItem(addTransStr);
-        addTrans.addActionListener(ml);
-        transMenu.add(addTrans);
-        
-        misc = new JMenu(miscStr);
-        
-        playDarts = new JMenuItem(dartsStr);
-        playDarts.addActionListener(ml);
-        misc.add(playDarts);
-        
+        Vector<MenuContent> menuContent = new Vector<>();
+//        Vector<JMenuItem> fileMenuItems = new Vector<>(Arrays.asList(readFile, writeFile));
+//        Vector<JMenuItem> acctMenuItems = new Vector<>(Arrays.asList(addAcct, findAcct, listAcct));
+//        Vector<JMenuItem> transMenuItems = new Vector<>(Arrays.asList(listAcctTrans, addTrans, listDep, listCheck));
+//        Vector<JMenuItem> miscItems = new Vector<>(Arrays.asList(playDarts));
+//        menuContent.addElement(new MenuContent(fileMenu, fileMenuItems, fileStr));
+//        menuContent.addElement(new MenuContent(acctMenu, acctMenuItems, acctStr));
+//        menuContent.addElement(new MenuContent(transMenu, transMenuItems, transStr));
+//        menuContent.addElement(new MenuContent(misc, miscItems, miscStr));
+        Vector<String> fileMenuStrs = new Vector<>(Arrays.asList(fileStr, readFileStr, writeFileStr));
+        Vector<String> acctMenuStrs = new Vector<>(Arrays.asList(acctStr, addAcctStr, findAcctStr, listingAcctStr));
+        Vector<String> tranMenuStrs = new Vector<>(Arrays.asList(transStr, listAcctTransStr, addTransStr, listDepStr, listCheckStr));
+        Vector<String> miscMenuStrs = new Vector<>(Arrays.asList(miscStr, dartsStr));
+        Vector<JMenu> menuItems = new Vector<>();
+        Vector<Vector<String>> menuStrs = new Vector<>(Arrays.asList(fileMenuStrs, acctMenuStrs, tranMenuStrs, miscMenuStrs));
+
+        // Itterate through list to create list of JMenu objects
+        final int fontSize = 12*Toolkit.getDefaultToolkit().getScreenSize().width/dim.width;
+        menuStrs.forEach((vec) -> {
+            JMenu menu = new JMenu(vec.elementAt(0));
+            int length = vec.size();
+            for (int i = 1; i < length; i++) {
+                JMenuItem item = new JMenuItem(vec.elementAt(i));
+                item.addActionListener(ml);
+                item.setFont(new Font("Courier New", Font.PLAIN, fontSize - (int)(fontSize * 0.1)));
+                menu.add(item);
+                menu.setFont(new Font("Courier New", Font.PLAIN, fontSize));
+            }
+            menuItems.add(menu);
+        });
+
+        // Create and populate menu bar with JMenu objects
         bar = new JMenuBar();
-        bar.add(fileMenu);
-        bar.add(acctMenu);
-        bar.add(transMenu);
-        bar.add(misc);
-        
-        setJMenuBar(bar); 
-        
+        menuItems.forEach(item -> {
+            bar.add(item);
+        });
+
+        setJMenuBar(bar);
         setBackground(Color.green);
-        setPreferredSize(new Dimension(325, 230));   
+        setPreferredSize(new Dimension(dim.width, dim.height));
     }
     
     private class MenuListener implements ActionListener
     {
         public void actionPerformed (ActionEvent event)
         {
-            String source = event.getActionCommand();            
-            if (source.equals(readFileStr))
-            {
-                Main.frame.setVisible(false);
-                CheckingAccount.readFile();
-                Main.frame.setVisible(true);
+            // Keeps Main frame suppressed when dart game is launched
+            boolean keepInvisible = false;
+            final String source = event.getActionCommand();
 
+            Main.frame.setVisible(false);
+            switch(source) {
+                case readFileStr:
+                    CheckingAccount.readFile();
+                    break;
+                case writeFileStr:
+                    if (CheckingAccount.acct1 != null) {
+                        CheckingAccount.saveFile();
+                    } else Main.ta.setText(emptyList);
+                    break;
+                case addAcctStr:
+                    CheckingAccount.getInitBal();
+                    break;
+                case listAcctTransStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText(emptyList);
+                    else CheckingAccount.listAllTrans(CheckingAccount.acct1);
+                    Main.ta.setCaretPosition(0);
+                    break;
+                case listCheckStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText(emptyList);
+                    else CheckingAccount.listAllChecks(CheckingAccount.acct1);
+                    Main.ta.setCaretPosition(0);
+                    break;
+                case listDepStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText(emptyList);
+                    else CheckingAccount.listAllDeposits(CheckingAccount.acct1);
+                    Main.ta.setCaretPosition(0);
+                    break;
+                case findAcctStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText(emptyList);
+                    else CheckingAccount.findAccount();
+                    break;
+                case listingAcctStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText("There are no accounts on file!");
+                    else CheckingAccount.listAllAcct();
+                    break;
+                case addTransStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText(emptyList);
+                    else CheckingAccount.enterTransaction();
+                    break;
+                case dartsStr:
+                    if (CheckingAccount.dataStore.isEmpty())
+                        Main.ta.setText("There are no accounts on file!");
+                    else {
+                        CheckingAccount.startGame();
+                        keepInvisible = true;
+                    }
+                    break;
+                default: System.out.println("Error in during action listener");
             }
-            
-            else if (source.equals(writeFileStr))
-            {
-                if(CheckingAccount.acct1 == null)
-                {
-                    Main.ta.setText(emptyList);
-                }
-                else
-                {
-                    Main.frame.setVisible(false);
-                    CheckingAccount.saveFile();
-                    Main.frame.setVisible(true);
-                }
-            }
-            
-            else if (source.equals(addAcctStr))
-            {
-                Main.frame.setVisible(false);
-                CheckingAccount.getInitBal();
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(listAcctTransStr))
-            {
-                Main.frame.setVisible(false);
-
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText(emptyList);
-                }
-                else
-                {
-                CheckingAccount.listAllTrans(CheckingAccount.acct1);
-                }
-                Main.ta.setCaretPosition(0);
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(listCheckStr))
-            {
-                Main.frame.setVisible(false);
-
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText(emptyList);
-                }
-                else
-                {
-                    CheckingAccount.listAllChecks(CheckingAccount.acct1);
-                }
-                Main.ta.setCaretPosition(0);
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(listDepStr))
-            {
-                Main.frame.setVisible(false);
-
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText(emptyList);
-                }                
-                else
-                {
-                    CheckingAccount.listAllDeposits(CheckingAccount.acct1);
-                }
-                
-                Main.ta.setCaretPosition(0);              
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(findAcctStr))
-            {
-                Main.frame.setVisible(false);
-                
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText(emptyList);
-                }
-                else
-                {
-                    CheckingAccount.findAccount();
-                }
-                
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(listingAcctStr))
-            {
-                Main.frame.setVisible(false);
-                
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText("There are no accounts on file!");
-                }
-                else
-                {
-                    CheckingAccount.listAllAcct();
-                }
-                
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(addTransStr))
-            {
-                Main.frame.setVisible(false);
-                
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText(emptyList);
-                }
-                else
-                {
-                    CheckingAccount.enterTransaction();
-                }
-                
-                Main.frame.setVisible(true);
-            }
-            
-            else if (source.equals(dartsStr))
-            {
-                if(CheckingAccount.dataStore.isEmpty())
-                {
-                    Main.ta.setText("There are no accounts on file!");
-                }
-                else
-                {
-                    Main.frame.setVisible((false));
-                    CheckingAccount.startGame();
-                }
-            }
-            
-            else
-                System.out.println("Error in during action listener");
-            
+            if (!keepInvisible) Main.frame.setVisible(true);
         }
     }
-    
+
    //*****************************************************************
    //  Represents the listener for the radio buttons
    //*****************************************************************
