@@ -4,92 +4,85 @@
  * and open the template in the editor.
  */
 package finalproject;
+import com.sun.xml.internal.bind.v2.model.core.EnumConstant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-//import java.util.ArrayList;
-import java.awt.image.BufferedImage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.*;
 import javax.sound.sampled.*;
-import javax.sound.sampled.AudioSystem.*;
-import javax.sound.sampled.AudioInputStream.*;
 import java.net.*;
 import java.applet.*;
-import java.util.Arrays;
-//import Toolkit.createCustomCursor;
 
 /**
  *
  * @author Dennis
  */
 public class DartsPanel extends JPanel
-{   
-    //in progress
-    private static int yCirPos = 0, xCirPos = 50, cirRadius = 50, mod = -1;
-    
+{
+    private int IMAGE_SCALE = (int)((float)Main.WIDTH/640f);
+    private int xCirPos = 50 * IMAGE_SCALE;
+    private int cirRadius = 50 * IMAGE_SCALE;
+    private int mod = -1;
+
     //in progress end
-    private final static int width = 640, height = 480;
-    private final static int midX = width / 2, midY = (height / 2);
-    
+    private final static int width = Main.WIDTH, height = Main.HEIGHT;
+
     //measured units
-    private static int meter = 320; //for every meter there are 320 pixels
+    private static int meterUnit = 320; //for every meter there are 320 pixels
     //measured units end
-    
+
     //toggles
     private static boolean driftCxl = true; //toggle drift (true off, false on)
     //toggles end
 
     //audio implementation
-    private String tinny_impact = "./audio/tinny_impact.wav", 
-            wooden_impact = "./audio/wooden_impact.wav",
-            terrible = "./audio/PIR_fail.wav",
-            woodPlastic = "./audio/missedDart.wav", 
-            gameOverSong = "./audio/Game_Over_-_Sound_Effect.wav";
-    
+    private String tinny_impact = "file:./audio/tinny_impact.wav",
+            wooden_impact = "file:./audio/wooden_impact.wav",
+            terrible = "file:./audio/PIR_fail.wav",
+            woodPlastic = "file:./audio/missedDart.wav",
+            gameOverSong = "file:./audio/Game_Over_-_Sound_Effect.wav";
     private Clip clip;
 
     private File input;
-    private AudioInputStream sound; 
-    private AudioClip audioClip, dartWall, dartBoard;
+    private AudioInputStream sound;
     private DataLine.Info info;
     //audio end
-    
+
     //graphics
-    private String handArr[] = {"./img/hand1.png", "./img/hand2.png", 
-        "./img/hand3.png", "./img/hand4.png", "./img/hand5.png",
-        "./img/hand6.png", "./img/hand5.png", "./img/hand4.png",
-        "./img/hand3.png", "./img/hand2.png", "./img/hand1.png",
-        "./img/hand7.png"};
-//    private ImageIcon handArr[];
-    private ImageIcon hand, board, bg, dart, meterBar, aimBar, quitIcon, 
-            quitIcon2, restartIcon, restartIcon2, tutorial1PopUp, 
+    private String handArrStrs[] = {
+            "./img/hand1.png", "./img/hand2.png", "./img/hand3.png",
+            "./img/hand4.png", "./img/hand5.png", "./img/hand6.png",
+            "./img/hand7.png"};
+    private int handIndexSequence[] = {0,1,2,3,4,5,4,3,2,1,0,6};
+    private ImageIcon handArr[];
+    private final int HAND_FRAME_COUNT = handArrStrs.length;
+    private ImageIcon hand, board, bg, dart, meterBar, aimBar, quitIcon,
+            quitIcon2, restartIcon, restartIcon2, tutorial1PopUp,
             tutorial2PopUp, tutorial3PopUp, helpIcon, helpIcon2;
-    public boolean tutorial = false, tutorial1 = false, tutorial2 = false, 
+    public boolean tutorial = false, tutorial1 = false, tutorial2 = false,
             tutorial3 = false, handDraw = true;
-    public int circleDiameter = 20;
-    private static final int circleAimMax = 50;
+    public int circleDiameter = 20 * IMAGE_SCALE;
+    private final int circleAimMax = 50 * IMAGE_SCALE;
     private int xHand, yHand, whiteOut = 0;
-    private int scoreColor1 = 255, scoreColor2 = 255, scoreColor3 = 255, 
+    private int scoreColor1 = 255, scoreColor2 = 255, scoreColor3 = 255,
             scoreColor4 = 255;
-    public int helpIconX = (width * 1 / 9), helpIconY  = (height * 7 / 9);
+    public int helpIconX = (width / 9), helpIconY  = (height * 7 / 9);
     public int pingSpeedMod = 0;
     //graphics ends
-    
+
     //score handling
-    private static int turnScore = 0, turnScore1 = 0, turnScore2 = 0, 
-            turnScore3 = 0, playerScore = 0, scoreMultiplier = 0, 
-            scoreMultiplier1 = 0, scoreMultiplier2 = 0, scoreMultiplier3, sideX, 
+    private static int turnScore = 0, turnScore1 = 0, turnScore2 = 0,
+            turnScore3 = 0, playerScore = 0, scoreMultiplier = 0,
+            scoreMultiplier1 = 0, scoreMultiplier2 = 0, scoreMultiplier3, sideX,
             sideY;
-        
-    private static int scoreBoardX = (width * 7 / 10), 
-            scoreBoardY = (height / 15), pointsSum = 0, 
-            highScoreBoardX = (width * 1 / 10), highScoreBoardY = scoreBoardY;
-    private static boolean scorePop1 = false, scorePop2 = false, 
+
+    private static int scoreBoardX = (width * 7 / 10),
+            scoreBoardY = (height / 15), pointsSum = 0,
+            highScoreBoardX = (width / 10), highScoreBoardY = scoreBoardY;
+    private static boolean scorePop1 = false, scorePop2 = false,
             scorePop3 = false;
-    private static int scorePop1X, scorePop1Y, scorePop2X, scorePop2Y, 
+    private static int scorePop1X, scorePop1Y, scorePop2X, scorePop2Y,
             scorePop3X, scorePop3Y;
     private static int highScore = 0;
 
@@ -97,95 +90,92 @@ public class DartsPanel extends JPanel
     private int handArrIndex = 0;
     private static double angle;
 
-    private int DELAY = 120, DELAYFLOW = 18, IMAGE_SCALE = 2,
-            IMAGE_SCALE_BOARD = 1;
+    private int DELAY = 120, DELAYFLOW = 18;
     private int aniMode = 1;
-    private boolean driftXrev = false, driftYrev = false, imageResize = true;
+    private boolean driftXrev = true, driftYrev = true, imageResize = true;
     private boolean attempt1 = false, attempt1F = false, attempt2 = false, 
             attempt2F = false, attempt3 = false, attempt3F = false, 
             lockBar = false, lockAimBar = false;
     private int X1, Y1, X2, Y2, X3, Y3, xAim = 0, yAim = 1, yAimFactor = 2;
     private int power = 5, deviation = 1;
-    private final int distance = 600 , gravity = 5;
+    private final int distance = 300, gravity = 5;
     private int powerBarFlow = 2, aimBarFlow = -150, powerBarFactor = 1,
             aimBarFactor = 5, dirPBF = 1, dirABF = 1, dirAimCircle = 1;
-    
+
     private Timer timer, timerFlow;
-    private int x = (width / 2) , y = (height / 2), driftX = 15, driftY = 0, 
-            dartX = 0, dartY = 0, driftMax = 15;
-    private java.net.URL handUrl, dartUrl;
-    
+    private int x = (width / 2) , y = (height / 2), driftX = 15, driftY = 0,
+            dartX = 0, dartY = 0, driftMax = 15 * IMAGE_SCALE;
+
     //game control
-    private static boolean endGame = false, restartGame = false, 
-            endGameFirstPass = true;
+    private static boolean endGame = false, restartGame = false, endGameFirstPass = true;
     //game control end
-    public DartsPanel()
-    {           
-        ImageIcon hand1 = new ImageIcon("./img/hand1.png");
-        ImageIcon hand2 = new ImageIcon("./img/hand2.png");
-        ImageIcon hand3 = new ImageIcon("./img/hand3.png");
-        ImageIcon hand4 = new ImageIcon("./img/hand4.png");
-        ImageIcon hand5 = new ImageIcon("./img/hand5.png");
-        ImageIcon hand6 = new ImageIcon("./img/hand6.png");
-        ImageIcon hand7 = new ImageIcon("./img/hand7.png");
-        
-        hand1.setImage(hand1.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
-        hand2.setImage(hand2.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
-        hand3.setImage(hand3.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
-        hand4.setImage(hand4.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
-        hand5.setImage(hand5.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
-        hand6.setImage(hand6.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
-        hand7.setImage(hand7.getImage().getScaledInstance(44, 66, Image.SCALE_SMOOTH));
+    private Applet applet = new Applet();
+    private AudioClip dartWoodenImpactSnd, dartTinnyImpactSnd, dartWoodPlasticSnd, gameOverSongSnd, terribleSnd;
 
-        ImageIcon handArr[] = { hand1, hand2, hand3, hand4, hand5, hand6, hand7 };
+    DartsPanel() {
+        // set hand animation images
+        Dimension handDim = new Dimension((int)(44f/640f*(float)width), (int)(66f/480f*(float)height));
+        handArr = new ImageIcon[HAND_FRAME_COUNT];
+        for (int i = 0; i < HAND_FRAME_COUNT; i++) {
+            handArr[i] = getImage(handArrStrs[i]);
+            handArr[i].setImage(handArr[i].getImage().getScaledInstance(
+                    handDim.width * IMAGE_SCALE,
+                    handDim.height * IMAGE_SCALE,
+                    Image.SCALE_FAST));
+        }
 
+        // sound
+        dartWoodenImpactSnd = createAudioClip(wooden_impact);
+        dartTinnyImpactSnd = createAudioClip(tinny_impact);
+        dartWoodPlasticSnd = createAudioClip(woodPlastic);
+        gameOverSongSnd = createAudioClip(gameOverSong);
+        terribleSnd = createAudioClip(terrible);
 
-        
         timer = new Timer(DELAY, new PlayerListener());
         timerFlow = new Timer(DELAYFLOW, new TimerListener());
         
         PlayerListener listener = new PlayerListener();
 
         board = getImage("./img/BigDartboard.png");       
-        board.setImage(board.getImage().getScaledInstance(144, 144, Image.SCALE_SMOOTH));
+        board.setImage(board.getImage().getScaledInstance(144 * IMAGE_SCALE, 144 * IMAGE_SCALE, Image.SCALE_SMOOTH));
 
+        dart = getImage("./img/dart.png");
+        dart.setImage(dart.getImage().getScaledInstance(10 * IMAGE_SCALE, 10 * IMAGE_SCALE, Image.SCALE_SMOOTH));
 
         meterBar = getImage("./img/meter_bar_wood.png");
-        meterBar.setImage(meterBar.getImage().getScaledInstance(60, 275, Image.SCALE_SMOOTH));
-        
+        meterBar.setImage(meterBar.getImage().getScaledInstance(60 * IMAGE_SCALE, 275 * IMAGE_SCALE, Image.SCALE_SMOOTH));
+
+
         bg = getImage("./img/bg.jpg");
-        bg.setImage(bg.getImage().getScaledInstance(640, 480, Image.SCALE_FAST));
+        bg.setImage(bg.getImage().getScaledInstance(width, height, Image.SCALE_FAST));
         
         aimBar = getImage("img/aimBarWood.png");
-        aimBar.setImage(aimBar.getImage().getScaledInstance(350, 40, Image.SCALE_SMOOTH));
+        aimBar.setImage(aimBar.getImage().getScaledInstance(350 * IMAGE_SCALE,40 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         
         restartIcon = getImage("img/restart.png");
-        restartIcon.setImage(restartIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+        restartIcon.setImage(restartIcon.getImage().getScaledInstance(75 * IMAGE_SCALE, 75 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         
         restartIcon2 = getImage("img/restart2.png");
-        restartIcon2.setImage(restartIcon2.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+        restartIcon2.setImage(restartIcon2.getImage().getScaledInstance(75 * IMAGE_SCALE, 75 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         
         quitIcon = getImage("img/quit.png");
-        quitIcon.setImage(quitIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+        quitIcon.setImage(quitIcon.getImage().getScaledInstance(75 * IMAGE_SCALE, 75 * IMAGE_SCALE, Image.SCALE_SMOOTH));
                 
         quitIcon2 = getImage("img/quit2.png");
-        quitIcon2.setImage(quitIcon2.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+        quitIcon2.setImage(quitIcon2.getImage().getScaledInstance(75 * IMAGE_SCALE, 75 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         
         helpIcon = getImage("img/help.png");
-        helpIcon.setImage(helpIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+        helpIcon.setImage(helpIcon.getImage().getScaledInstance(75 * IMAGE_SCALE, 75 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         
         helpIcon2 = getImage("img/help2.png");
-        helpIcon2.setImage(helpIcon2.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-        
-        dartWall = setSound(tinny_impact);
-        dartBoard = setSound(wooden_impact);
-        
+        helpIcon2.setImage(helpIcon2.getImage().getScaledInstance(75 * IMAGE_SCALE, 75 * IMAGE_SCALE, Image.SCALE_SMOOTH));
+
         tutorial1PopUp = getImage("img/tutorial1.png");
-        tutorial1PopUp.setImage(tutorial1PopUp.getImage().getScaledInstance(230, 150, Image.SCALE_SMOOTH));
+        tutorial1PopUp.setImage(tutorial1PopUp.getImage().getScaledInstance(230 * IMAGE_SCALE, 150 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         tutorial2PopUp = getImage("img/tutorial2.png");
-        tutorial2PopUp.setImage(tutorial2PopUp.getImage().getScaledInstance(230, 150, Image.SCALE_SMOOTH));
+        tutorial2PopUp.setImage(tutorial2PopUp.getImage().getScaledInstance(230 * IMAGE_SCALE, 150 * IMAGE_SCALE, Image.SCALE_SMOOTH));
         tutorial3PopUp = getImage("img/tutorial3.png");
-        tutorial3PopUp.setImage(tutorial3PopUp.getImage().getScaledInstance(230, 150, Image.SCALE_SMOOTH));
+        tutorial3PopUp.setImage(tutorial3PopUp.getImage().getScaledInstance(230 * IMAGE_SCALE, 150 * IMAGE_SCALE, Image.SCALE_SMOOTH));
 
         setPreferredSize (new Dimension(width, height));
         setBackground(Color.white);
@@ -205,8 +195,7 @@ public class DartsPanel extends JPanel
         timerFlow.start();
         tutorial = CheckingAccount.acct1.tutorialState;
         
-        
-        ////////////////////////System.out.println("mainpanel"); 
+
     }
     
     public ImageIcon getImage(String file)
@@ -237,18 +226,20 @@ public class DartsPanel extends JPanel
             board.paintIcon(this, g, (width / 2) - (board.getIconWidth() / 2) + 1, (height / 2) - (board.getIconHeight() / 2) + 1);
             drift();
 
+            int dartPosX = xHand - (dart.getIconWidth() / 2) + dartX;
+            int dartPosY = yHand - dart.getIconHeight() / 2 + dartY;
+
             if(attempt1)
             {
 //                System.out.println("inside attempt1");
                 if(!(attempt1F))
                 {
-                    X1 = xHand - (hand.getIconWidth() / 2) + dartX;
-                    Y1 = yHand - (hand.getIconHeight() / 2) + dartY;
+                    X1 = dartPosX;
+                    Y1 = dartPosY;
                     sideX = X1;
                     sideY = Y1;
                     attempt1F = true;
-//                                        System.out.println("X1 in attempt = " + X1 + " Y1 in attempt = " + Y1);
-                    angle = angleFind(X1 - (width / 2), -Y1 + (height / 2));    
+                    angle = angleFind(X1 - (width / 2), -Y1 + (height / 2));
                     scoreFind(X1 - (width / 2), -Y1 + (height / 2));
                     scorePop1 = true;
                     scorePop1X = X1;
@@ -260,11 +251,11 @@ public class DartsPanel extends JPanel
                 if(scorePop1)
                 {
                     g.setColor(Color.blue);
-                    g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+                    g.setFont(new Font("TimesRoman", Font.BOLD, 20 * IMAGE_SCALE));
                     
                     if(scoreMultiplier1 > 1)
                     {
-                        g.drawString(Integer.toString(turnScore1) + " x " + Integer.toString(scoreMultiplier1), scorePop1X, scorePop1Y);
+                        g.drawString(turnScore1 + " x " + scoreMultiplier1, scorePop1X, scorePop1Y);
                     }
                     else
                     {
@@ -290,12 +281,11 @@ public class DartsPanel extends JPanel
             {
                 if(!(attempt2F))
                 {
-                    X2 = xHand - (hand.getIconWidth() / 2) + dartX;
-                    Y2 = yHand - (hand.getIconHeight() / 2) + dartY;
+                    X2 = dartPosX;
+                    Y2 = dartPosY;
                     sideX = X2;
                     sideY = Y2;
                     attempt2F = true;
-//                                        System.out.println("X2 in attempt = " + X2 + " Y2 in attempt = " + Y2);
                     angle = angleFind(X2 - (width / 2), -Y2 + (height / 2));
                     scoreFind(X2 - (width / 2), -Y2 + (height / 2));
                     scorePop2 = true;
@@ -308,11 +298,11 @@ public class DartsPanel extends JPanel
                 if(scorePop2)
                 {
                     g.setColor(Color.yellow);
-                    g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+                    g.setFont(new Font("TimesRoman", Font.BOLD, 20 * IMAGE_SCALE));
                     
                     if(scoreMultiplier2 > 1)
                     {
-                        g.drawString(Integer.toString(turnScore2) + " x " + Integer.toString(scoreMultiplier2), scorePop2X, scorePop2Y);
+                        g.drawString(turnScore2 + " x " + scoreMultiplier2, scorePop2X, scorePop2Y);
                     }
                     else
                     {
@@ -336,12 +326,11 @@ public class DartsPanel extends JPanel
             {
                 if(!(attempt3F))
                 {
-                    X3 = xHand - (hand.getIconWidth() / 2) - (dart.getIconWidth() / 2) + dartX;
-                    Y3 = yHand - (hand.getIconHeight() / 2) - (dart.getIconHeight() / 2) + dartY;
+                    X3 = dartPosX;
+                    Y3 = dartPosY;
                     sideX = X3;
                     sideY = Y3;
                     attempt3F = true;
-//                                        System.out.println("X3 in attempt = " + X3 + " Y3 in attempt = " + Y3);
                     angle = angleFind(X3 - (width / 2), -Y3 + (height / 2));
                     scoreFind(X3 - (width / 2), -Y3 + (height / 2));
                     
@@ -356,10 +345,10 @@ public class DartsPanel extends JPanel
                 if(scorePop3)
                 {
                     g.setColor(Color.green);
-                    g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+                    g.setFont(new Font("TimesRoman", Font.BOLD, 20 * IMAGE_SCALE));
                     if(scoreMultiplier3 > 1)
                     {
-                        g.drawString(Integer.toString(turnScore3) + " x " + Integer.toString(scoreMultiplier3), scorePop3X, scorePop3Y);
+                        g.drawString(turnScore3 + " x " + scoreMultiplier3, scorePop3X, scorePop3Y);
                     }
                     else
                     {
@@ -386,19 +375,17 @@ public class DartsPanel extends JPanel
 
             if(aniMode == 2)
             {
-                meterBar.paintIcon(this, g, (width * 7 / 8) - (10) , (height / 2) - (meterBar.getIconHeight() / 2));
+                meterBar.paintIcon(this, g, (width * 7 / 8) - 8 * IMAGE_SCALE, (height - meterBar.getIconHeight()) / 2 - 23 * IMAGE_SCALE);
                 g.setColor(new Color(255 - powerBarFlow, powerBarFlow, 0, 200).brighter().brighter());
-                g.fillRect((width * 7 / 8) + 5, ((height * 2 / 3) + (39)) - powerBarFlow, 32, powerBarFlow); //powerBar
+                // 23 == vertical offset
+                g.fillRect((width * 7 / 8) + 5 * IMAGE_SCALE, height * 2 / 3 - powerBarFlow * IMAGE_SCALE, 32 * IMAGE_SCALE, powerBarFlow * IMAGE_SCALE); //powerBar
 //                System.out.println("animode 2 paint " + ", width = " + width + ", height = " + height + ", powerBarFlow = " + powerBarFlow);
             }
             if(aniMode == 3)  //aimBar
             {   
                 aimBar.paintIcon(this, g, (width / 2) - (aimBar.getIconWidth() / 2), height / 8 - (aimBar.getIconHeight() / 2));
                 g.setColor(new Color((int)(0 + Math.abs((double)aimBarFlow) * 1.5), (int)(255 - Math.abs((double)aimBarFlow) * 1.5), 0, 200).brighter().brighter());
-                g.fillRect(((width / 2) + 3) - ((Math.abs(aimBarFlow) - aimBarFlow)/2), (height / 8) - 8, Math.abs(aimBarFlow), 18);
-
-//                                System.out.println("animode 3 paint");
-
+                g.fillRect(((width / 2) + 3) - ((Math.abs(aimBarFlow * IMAGE_SCALE) - aimBarFlow * IMAGE_SCALE) / 2), (height / 8) - 8 * IMAGE_SCALE, Math.abs(aimBarFlow * IMAGE_SCALE), 18 * IMAGE_SCALE);
             }
 
             g.setColor(Color.white);
@@ -411,15 +398,6 @@ public class DartsPanel extends JPanel
 
             if (!tutorial)
             {
-//if((Math.pow(x - (width / 3), 2) + Math.pow(y - (height / 2), 2)) < Math.pow(restartIcon.getIconWidth() / 2, 2))
-//                {
-//                    restartIcon2.paintIcon(this, g, (width / 3) - (restartIcon2.getIconWidth() / 2), (height / 2) - (restartIcon.getIconHeight() / 2));                   
-//                }
-//                else
-//                {
-//                    restartIcon.paintIcon(this, g, (width / 3) - (restartIcon.getIconWidth() / 2), (height / 2) - (restartIcon.getIconHeight() / 2));
-//                }
-
                 if((Math.pow(x - helpIconX, 2) + Math.pow(y - helpIconY, 2)) < (Math.pow(helpIcon.getIconHeight() / 2, 2))) //turns on tutorial/tips
                 {
                     helpIcon2.paintIcon(this, g, helpIconX - helpIcon.getIconWidth() / 2, helpIconY - helpIcon.getIconHeight() / 2);
@@ -434,11 +412,6 @@ public class DartsPanel extends JPanel
             
             if (aniMode == 0)
             {
-//                if (restartGlow)
-//                {
-//                    g.setColor(Color.yellow.brighter().brighter().brighter());
-//                    g.fillOval((width / 3) - (restartIcon.getIconWidth() / 2), (height / 2) - (restartIcon.getIconHeight() / 2), restartIcon.getIconWidth() + 2, restartIcon.getIconHeight() + 2);
-//                }
                 if (whiteOut < 254)
                 {           
                     whiteOut += 2;
@@ -459,12 +432,12 @@ public class DartsPanel extends JPanel
                 g.fillRect(0, 0, width, height);
 
                 g.setColor(new Color(scoreColor1, scoreColor2, scoreColor3, scoreColor4));
-                g.setFont(new Font(Font.SERIF, Font.BOLD+Font.ITALIC, 20));
+                g.setFont(new Font(Font.SERIF, Font.BOLD+Font.ITALIC, 20 * IMAGE_SCALE));
                 if(CheckingAccount.activeBet)
                 {   
-                    g.drawString(winMessage(), (width / 2) - 100, (height / 2) - 100);
+                    g.drawString(winMessage(), width / 4, height / 4);
                 }
-                g.drawString("Play Again?", (width / 2) - 50, height / 2);
+                g.drawString("Play Again?", (width / 2) - 50 * IMAGE_SCALE, height / 2);
                 
                 g.drawString("Top Score: " + CheckingAccount.highestScore + " (" + CheckingAccount.highestScorer + ")", (width / 12), (height * 9 / 10));
                 
@@ -490,9 +463,9 @@ public class DartsPanel extends JPanel
             }
             
             g.setColor(new Color(scoreColor1, scoreColor2, scoreColor3, scoreColor4));
-            g.setFont(new Font("Serif", Font.BOLD+Font.ITALIC, 30));
-            g.drawString("Score: " + Integer.toString(playerScore), scoreBoardX, scoreBoardY);
-            g.drawString("High Score: " + Integer.toString(highScore), highScoreBoardX, highScoreBoardY);
+            g.setFont(new Font("Serif", Font.BOLD+Font.ITALIC, 30 * IMAGE_SCALE));
+            g.drawString("Score: " + playerScore, scoreBoardX, scoreBoardY);
+            g.drawString("High Score: " + highScore, highScoreBoardX, highScoreBoardY);
             
             if(tutorial1)
             {
@@ -514,9 +487,8 @@ public class DartsPanel extends JPanel
     
     private void getHandCoor()
     {
-        xHand = (x - (getImage(handArr[0]).getIconWidth() / 2) + driftX);
-
-        yHand = (y - (getImage(handArr[0]).getIconHeight() / 2) + driftY);        
+        xHand = (x - (getImage(handArrStrs[0]).getIconWidth() / 2) + driftX * IMAGE_SCALE);
+        yHand = (y - (getImage(handArrStrs[0]).getIconHeight() / 2) + driftY * IMAGE_SCALE);
     }
     
     private class TimerListener implements ActionListener
@@ -524,7 +496,6 @@ public class DartsPanel extends JPanel
         public void actionPerformed(ActionEvent event)
         {
             circularPath();
-//            System.out.println("inside timerlistener");
             circleDiameterPing();
             
             if(aniMode == 1)
@@ -538,7 +509,6 @@ public class DartsPanel extends JPanel
 
             if (aniMode < 4 && aniMode > 1)
             {
-//                System.out.println("inside listenerloop");
                 if(aniMode == 2)
                 {
                     powerBar();
@@ -570,20 +540,17 @@ public class DartsPanel extends JPanel
     {
         public void mousePressed(MouseEvent event)
         {
-//            System.out.println("press detected\n");
 //            mouse click after release
         }
         
         public void mouseClicked(MouseEvent event)
         {
-//                    System.out.println("inside mouseclick");
             if(!endGame)
             {
 
-                if((Math.pow(x - (width * 1 / 32), 2) + Math.pow(y - (height * 9 / 12), 2)) < Math.pow(helpIcon.getIconWidth(), 2)) //turns on tutorial/tips
+                if((Math.pow(x - (width / 32), 2) + Math.pow(y - (height * 9 / 12), 2)) < Math.pow(helpIcon.getIconWidth(), 2)) //turns on tutorial/tips
                 {
                     tutorial = true;
-//                    System.out.println(Math.pow(x - helpIconX, 2) + Math.pow(y - helpIconY, 2) + " " + Math.pow(helpIcon.getIconWidth() / 2, 2));
                 }
                 else
                 {
@@ -609,7 +576,6 @@ public class DartsPanel extends JPanel
                     }
                     else if (aniMode == 4)
                     {
-//                        System.out.println("actionPerformed aniMode 4");
                         aniMode = 1;
                         DELAY = 120;
                         handArrIndex = 0;
@@ -631,7 +597,7 @@ public class DartsPanel extends JPanel
                     endGameFirstPass = false;
                     x = 0;
                     y = 0;
-                    playSound(gameOverSong);
+                    gameOverSongSnd.play();
                     if (CheckingAccount.activeBet)
                     {
                         CheckingAccount.depositWin();
@@ -639,7 +605,6 @@ public class DartsPanel extends JPanel
                     CheckingAccount.checkTopScore();
                 }    
 
-//                System.out.println((Math.pow(x - (width / 3), 2) + Math.pow(y - (height / 2), 2)) + Math.pow(restartIcon.getIconWidth() / 2, 2));
                 if((Math.pow(x - (width / 3), 2) + Math.pow(y - (height / 2), 2)) < Math.pow(restartIcon.getIconWidth() / 2, 2))
                 {
                     FinalProject.dartFrame.dispose();
@@ -674,7 +639,6 @@ public class DartsPanel extends JPanel
         public void mouseReleased(MouseEvent event)
         {
             //detected click release
-//            System.out.println("mouse released detected");
         }
         public void mouseEntered(MouseEvent event){}
         public void mouseExited(MouseEvent event){}
@@ -683,56 +647,30 @@ public class DartsPanel extends JPanel
             x = event.getX();
             y = event.getY();
             imageResize = true;
-//            System.out.println(Math.pow(x - (width * 1 / 32), 2) + Math.pow(y - (height * 9 / 12), 2) + " " + (Math.pow(helpIcon.getIconHeight() / 2, 2)));
         }
     }
-    
+
+    // Moves through animation array
     private void handIdle()
     {
-        IMAGE_SCALE = 2;
         lockBar = false;
-
-        hand = getImage(handArr[handArrIndex]);
-
+        hand = handArr[handIndexSequence[handArrIndex]];
         handArrIndex = (handArrIndex + 1) % 11;
-
-        hand.setImage(hand.getImage().getScaledInstance(hand.getIconWidth() 
-                * IMAGE_SCALE, hand.getIconHeight() * IMAGE_SCALE, 
-                Image.SCALE_FAST));
     }
     
     private void handReady()
     {
-        IMAGE_SCALE = 2;
-
-        hand = getImage(handArr[1]);
-
-//        handArrIndex = (handArrIndex + 1) % 11;
-
-        hand.setImage(hand.getImage().getScaledInstance(hand.getIconWidth() 
-                * IMAGE_SCALE, hand.getIconHeight() * IMAGE_SCALE, 
-                Image.SCALE_FAST));
+        hand = handArr[1];
     }
     
     private void handThrow()
     {
-        handUrl = getClass().getResource(handArr[handArrIndex]);
-        if (handUrl != null) 
-        {
-            hand = new ImageIcon(handUrl);
-        } 
-        else 
-        {
-            throw new IllegalArgumentException("This icon file does not exist");
-        }
+        hand = handArr[handArrIndex];
         if(handArrIndex < 5)
             handArrIndex++;
-
         else if(handArrIndex == 5)
         {
-    //                                            System.out.println("inside dart list");
-            handArrIndex = 11;
-            darts();
+            handArrIndex = 6;
             if(!(attempt1))
             {
                 attempt1 = true;
@@ -746,32 +684,16 @@ public class DartsPanel extends JPanel
                 attempt3 = true;
             }
         }
-        else if(handArrIndex == 11)
+        else if(handArrIndex == 6)
         {
             timer.stop();
         }
         else{}
-
-        hand.setImage(hand.getImage().getScaledInstance(hand.getIconWidth() 
-            * IMAGE_SCALE, hand.getIconHeight() * IMAGE_SCALE, 
-            Image.SCALE_FAST));
-    }
-    
-    public void darts()
-    {
-        dartUrl = getClass().getResource("./img/dart.png");
-        
-        dart = new ImageIcon(dartUrl);
-        if(dart == null)
-        {
-            System.out.println("Problem loading dart image");
-        }
-//        System.out.println("inside darts");
     }
     
     public void drift()
     {
-            if (aniMode == 1 && driftCxl == false)
+            if (aniMode == 1 && !driftCxl)
             {
                 if(driftYrev)
                 {
@@ -797,7 +719,6 @@ public class DartsPanel extends JPanel
                     if(driftX > driftMax)
                         driftXrev = true;
                 }
-//                System.out.println("driftx = " + driftX + " driftY = " + driftY);
             }
     }
     private void dartPosition()
@@ -809,23 +730,19 @@ public class DartsPanel extends JPanel
         
         try
         {
-            dartY = (yAim + gravity * ((distance / power) * (distance / power)));
+            dartY = yAim + gravity * (distance / power) * (distance / power);
         }
         catch (ArithmeticException e)
         {
             System.out.println(e);
-            dartY = (yAim + gravity * ((distance / 1) * (distance / 1)));            
+            dartY = yAim + gravity * distance * distance;
         }
         
-        dartX = deviation * (distance / power) - 25;
-//        System.out.println("dartY pos = " + dartY + " dartX pos = " + dartX + " power = " + power + " gravity "+ gravity + " distance " + distance);
-
+        dartX = deviation * (distance / power) - 25 * IMAGE_SCALE;
     }
 
     private void powerBar()
     {
-//        System.out.println("powerBar top");
-                        
         if(aniMode == 2)
         {
             if(!(lockBar))
@@ -852,11 +769,8 @@ public class DartsPanel extends JPanel
                         powerBarFlow = 0;
                     }
                 }
-    //            System.out.println("dir = " + dirPBF + " powerBarFlow = " + powerBarFlow);
-
             }
         }
-//                System.out.println("powerBarFlow = " + powerBarFlow + " power " + power + " flowDELAY " + timerFlow.getDelay());
     }
     private void aimBar()
     {
@@ -887,8 +801,7 @@ public class DartsPanel extends JPanel
                         aimBarFlow = -150;
                     }
                 }
-                deviation = aimBarFlow / 5;
-//                System.out.println("aimBarFlow = " + aimBarFlow +  " aimBarFactor = " + aimBarFactor);
+                deviation = aimBarFlow * IMAGE_SCALE / 5;
             }
         }
     }
@@ -902,17 +815,7 @@ public class DartsPanel extends JPanel
             info = new DataLine.Info(Clip.class, sound.getFormat());
             clip = (Clip) AudioSystem.getLine(info);
         }
-        catch (IOException e)
-        {
-            System.out.println(e);
-            System.exit(1);
-        }
-        catch (UnsupportedAudioFileException e)
-        {
-            System.out.println(e);
-            System.exit(1);
-        }
-        catch(LineUnavailableException e)
+        catch (IOException | UnsupportedAudioFileException | LineUnavailableException e)
         {
             System.out.println(e);
             System.exit(1);
@@ -920,55 +823,24 @@ public class DartsPanel extends JPanel
         return clip;
     }
     
-    void playSound(String path)
+    private AudioClip createAudioClip(String path)
     {
         try
         {
-            int delay = 0;
-            String url = "file:" + path;
-            audioClip = Applet.newAudioClip(new URL(url));
-            audioClip.play();
-            Thread.sleep(delay);
-
+            return Applet.newAudioClip(new URL(path));
         }
-        catch (MalformedURLException murle) 
+        catch (MalformedURLException murle)
         {
-            System.out.println(murle);
+            murle.printStackTrace();
         }
-        catch (InterruptedException e)
-        {
-            System.out.println(e);
-        }
-    }
-    
-    AudioClip setSound(String path)
-    {
-        try
-        {
-            int delay = 0;
-            String url = "file:" + path;
-            audioClip = Applet.newAudioClip(new URL(url));
-//            clip.play();
-//            Thread.sleep(delay);
-
-        }
-        catch (MalformedURLException murle) 
-        {
-            System.out.println(murle);
-        }
-//        catch (InterruptedException e)
-//        {
-//            System.out.println(e);
-//        }
-        return audioClip;
+        return null;
     }
     
     void aimCircleCoor()
     {
         if(dirAimCircle == -1)
         {
-            yAim -= yAimFactor;
-//                                                        System.out.println("1" + " yAim = " + yAim + " dirAim.Circle = " + dirAimCircle + " yAimFactor = " + yAimFactor);
+            yAim -= yAimFactor * IMAGE_SCALE;
             if(yAim < -circleAimMax)
             {
                 dirAimCircle = 1;
@@ -977,8 +849,7 @@ public class DartsPanel extends JPanel
         }
         else 
         {
-            yAim += yAimFactor;
-//                                                        System.out.println("2" + " yAim = " + yAim + " dirAim.Circle = " + dirAimCircle + " yAimFactor = " + yAimFactor);
+            yAim += yAimFactor * IMAGE_SCALE;
             if(yAim > circleAimMax)
             {
                 dirAimCircle = -1;
@@ -1005,29 +876,27 @@ public class DartsPanel extends JPanel
             mod = -1;
         else if (xCirPos < -cirRadius)
             mod = 1;
-            
-        yCirPos = (int)Math.sqrt(Math.pow(cirRadius, 2) - Math.pow(xCirPos, 2)) * mod;
-//        System.out.println((double)yCirPos);
+
+        //in progress
+        int yCirPos = (int) Math.sqrt(Math.pow(cirRadius, 2) - Math.pow(xCirPos, 2)) * mod; // TODO: does not change. sqrt does not need to be recalculated every time
         xCirPos += (1 * mod);
     }
     
     private void scoreFind(int xIn, int yIn)
     {
-//        System.out.println("xIn = " + xIn + " yIn = " + yIn + " angle = " + angle);
         int distance = xIn*xIn + yIn*yIn ;
         int radius = (board.getIconWidth() / 2) * (board.getIconWidth() / 2);
         if ( distance > radius)
         {
-//            System.out.println("miss detected");
             if(distance > (radius * 10))
             {
                 System.out.println(1);
-                playSound(terrible);
+                terribleSnd.play();
             }
             else
             {
                 System.out.println(2);
-                dartWall.play();
+                dartTinnyImpactSnd.play();
 //                wallImpact.start();
 //                if (!(wallImpact.isRunning()))
 //                {
@@ -1036,26 +905,21 @@ public class DartsPanel extends JPanel
             }
             turnScore = 0;
             scoreMultiplier = 0;
-
         }
         else
         {
-//            System.out.println("distance = " + distance + " radius = " + radius);
-            dartBoard.play();
-            
-//            System.out.println("hit detected");
-
-            if (distance > 2*2)
+            dartWoodenImpactSnd.play();
+            if (distance > 2*2*IMAGE_SCALE*IMAGE_SCALE)
             {
-                if (distance > 5*5)
+                if (distance > 5*5*IMAGE_SCALE*IMAGE_SCALE)
                 {
-                    if(distance > 35*35)
+                    if(distance > 35*35*IMAGE_SCALE*IMAGE_SCALE)
                     {
-                        if(distance > 38*38)
+                        if(distance > 38*38*IMAGE_SCALE*IMAGE_SCALE)
                         {
-                            if(distance > 56*56)
+                            if(distance > 56*56*IMAGE_SCALE*IMAGE_SCALE)
                             {
-                                if (distance > 59*59)
+                                if (distance > 59*59*IMAGE_SCALE*IMAGE_SCALE)
                                 {
 //                                    System.out.println("outside rim");
                                     scoreMultiplier = 0;
@@ -1098,26 +962,20 @@ public class DartsPanel extends JPanel
             playerScore += turnScore;
             return;
         }
-//        System.out.println(3);
-
         return;
     }
     private static double angleFind(double xIn, double yIn)
     {
-//        System.out.println("xIn = " + xIn + " yIn = " + yIn + " angle to degrees " + Math.toDegrees(Math.atan2(yIn, xIn)));
         return Math.toDegrees(Math.atan2(yIn, xIn)); // y , x
-        
     }
     private static int scoreMultiplierFind(int xIn, int yIn)
     {
         sideY = yIn - (height / 2);
         sideX = xIn - (width / 2);
-//        System.out.println(yIn + " = sideY sideX = " + xIn);
         if (-yIn > 0)
         {
             if(xIn > 0)
             {
-//                System.out.println("on right side1111" + " angle = " + angle);
 //                System.out.println("Quandrant IV");
                 if(angle <= -81)
                 {
@@ -1185,13 +1043,11 @@ public class DartsPanel extends JPanel
                     turnScore = 3;
                 }
             }
-//            System.out.println("on bottom3333");
         }
         else
         {
             if(xIn > 0)
             {
-//                System.out.println("Quadrant I" + " angle = " + angle + " angle using sin = " + 73.0*Math.sin(5.0*Math.PI/10.0));
                 if(angle >= 81)
                 {
 //                    System.out.println("hit 20");
@@ -1257,7 +1113,6 @@ public class DartsPanel extends JPanel
                     turnScore = 20;
                 }
             }
-//            System.out.println("on top6666");
         }
                 
         return turnScore * scoreMultiplier;
@@ -1265,9 +1120,6 @@ public class DartsPanel extends JPanel
     
     private void gameReset()
     {
-//        CheckingAccount.acct1.addTrans(new Deposit(1, CheckingAccount.calculateWin(playerScore), CheckingAccount.acct1.getTransCount(), 0, playerScore));
-//        CheckingAccount.bettingCharge();
-
         System.out.println("resetting values");
         attempt1 = false;
         attempt2 = false;
@@ -1294,9 +1146,7 @@ public class DartsPanel extends JPanel
     }
     private void gameQuit()
     {
-        System.out.println("Disposing frame");
         FinalProject.dartFrame.dispose();
-        
         Main.frame.setVisible(true);
     }
     
@@ -1305,7 +1155,6 @@ public class DartsPanel extends JPanel
         String message = new String("");
         String scoreStr = CheckingAccount.fmt.format(CheckingAccount.calculateWin(playerScore));
         message += ("You won " + scoreStr + "!");
-        
         return message;
         
     }

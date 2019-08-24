@@ -5,37 +5,36 @@
  */
 package finalproject;
 import java.awt.*;
-import java.awt.event.*;
+import java.net.MalformedURLException;
 import javax.swing.*;
-import java.io.*;
-import java.util.*;
-import java.awt.Toolkit.*;
-
 
 /**
  *
  * @author Dennis
  */
-public class FinalProject {
+class FinalProject {
     static JFrame dartFrame;
-    static int WIDTH = 640, HEIGHT = 480;
-//    static Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(null, null, "./img/circle.png");
+    //    static Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(null, null, "./img/circle.png");
     
     /**
-     * @param args the command line arguments
-     */
-    public static void dartsMain() {
+    / * @param args the command line arguments
+    / */
+    static void dartsMain() {
+//        int IMAGE_SCALE = Main.WIDTH / 640;
+        int windowWidth = Main.WIDTH, windowHeight = Main.HEIGHT;
+//        int scaledWindowHeight = (int)((float)Main.HEIGHT * 640f / (float)Main.WIDTH);
+        int windowPositionX = Main.WINDOW_LOCATION.width, windowPositionY = Main.WINDOW_LOCATION.height;
         dartFrame = new JFrame("Darts");
-        dartFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    
+        dartFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         dartFrame.setAlwaysOnTop(true);
-        dartFrame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        dartFrame.setPreferredSize(new Dimension(windowWidth, windowHeight));
         dartFrame.setResizable(false);
+        dartFrame.setSize(windowWidth, windowHeight);
 //        dartFrame.setCursor(blank);
-        dartFrame.setLocation((Main.dim.width - WIDTH) / 2, (Main.dim.height - HEIGHT) / 2);
+        dartFrame.setLocation(windowPositionX, windowPositionY);
 //        System.out.print("width = " + (dartFrame.getWidth()) / 2 + " height = " + (Main.dim.height - dartFrame.getHeight()) / 2);
         dartFrame.getContentPane().add(new DartsPanel());
-        dartFrame.pack();
+//        dartFrame.pack();
         dartFrame.setVisible(true);
     }
-    
 }

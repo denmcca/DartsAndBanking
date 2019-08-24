@@ -5,6 +5,7 @@
  */
 package finalproject;
 import java.awt.*;
+import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -793,8 +794,7 @@ public class CheckingAccount extends Account {
         }
     }
     
-    public static void startGame()
-    {
+    public static void startGame() {
         int option;
         
         option = JOptionPane.showConfirmDialog(null, "$50.00 to win back your amount in points plus 50%!", "Would you like to make a bet?", JOptionPane.YES_NO_OPTION);

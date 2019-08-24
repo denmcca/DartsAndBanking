@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5888de16-c98a-4ccd-b053-084b610f60f5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/default.dat" beforeDir="false" afterPath="$PROJECT_DIR$/default.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel$CAPanelListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel$CAPanelListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel$MenuContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel$MenuListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel$MenuListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckOptionsPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckingAccount$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckingAccount$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckingAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/CheckingAccount.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/DartsPanel$PlayerListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/DartsPanel$PlayerListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/DartsPanel$TimerListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/DartsPanel$TimerListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/DartsPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/DartsPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/FinalProject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/FinalProject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BankingSystemWithDarts/finalproject/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/finalproject/CheckOptionsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/finalproject/CheckOptionsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/finalproject/CheckingAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/finalproject/CheckingAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/finalproject/DartsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/finalproject/DartsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/finalproject/FinalProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/finalproject/FinalProject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/finalproject/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/finalproject/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -21,25 +33,7 @@
         <entry file="file://$PROJECT_DIR$/src/finalproject/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
-              <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/javax/swing/JTextArea.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8715">
-              <caret line="638" column="16" selection-start-line="638" selection-start-column="16" selection-end-line="638" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/Window.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11100">
-              <caret line="800" column="16" selection-start-line="800" selection-start-column="16" selection-end-line="800" selection-end-column="16" />
+              <caret line="46" column="39" lean-forward="true" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -47,8 +41,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/finalproject/FinalProject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+            <state relative-caret-position="379">
+              <caret line="35" column="48" lean-forward="true" selection-start-line="35" selection-start-column="48" selection-end-line="35" selection-end-column="48" />
               <folding>
                 <element signature="e#0#1338#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -57,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/finalproject/CheckOptionsPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="181">
-              <caret line="78" column="92" selection-start-line="78" selection-start-column="92" selection-end-line="78" selection-end-column="92" />
+              <caret line="147" column="41" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,10 +64,65 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/finalproject/CheckingAccount.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="181">
+              <caret line="796" column="34" selection-start-line="796" selection-start-column="34" selection-end-line="796" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/finalproject/DartsPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="78" column="19" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
+            <state relative-caret-position="106">
+              <caret line="830" selection-start-line="830" selection-end-line="830" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#25407#25408#0" expanded="true" />
+                <element signature="e#34227#34228#0" expanded="true" />
+                <element signature="e#39819#39820#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/URL.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="592" selection-start-line="592" selection-end-line="592" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/applet/AudioClip.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="41" column="9" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/applet/Applet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="327" column="21" selection-start-line="327" selection-start-column="21" selection-end-line="327" selection-end-column="21" />
+              <folding>
+                <element signature="e#10337#10338#0" expanded="true" />
+                <element signature="e#10396#10397#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/Graphics.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="177">
+              <caret line="100" column="37" selection-start-line="100" selection-start-column="30" selection-end-line="100" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -82,8 +131,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Main</find>
+      <find>11</find>
+      <find>paintIcon</find>
+      <find>bg.setImage</find>
+      <find>setImage</find>
+      <find>darts()</find>
+      <find>bg.set</find>
+      <find>Darts</find>
+      <find>get</find>
+      <find>scoreFind</find>
+      <find>score</find>
+      <find>playerScore</find>
+      <find>setFont</find>
+      <find>getURL</find>
+      <find>System.out</find>
+      <find>wooden</find>
+      <find>wooden_impact</find>
+      <find>URL(</find>
+      <find>dartBoard</find>
+      <find>getRe</find>
+      <find>play()</find>
+      <find>catch</find>
+      <find>File</find>
+      <find>throw</find>
+      <find>windowHeight</find>
       <find>HEIGHT</find>
+      <find>System.out.print</find>
+      <find>create</find>
+      <find>drift</find>
+      <find>.wav</find>
+      <find>tinny</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -93,12 +170,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/finalproject/Main.java" />
+        <option value="$PROJECT_DIR$/src/finalproject/FinalProject.java" />
+        <option value="$PROJECT_DIR$/src/finalproject/CheckingAccount.java" />
         <option value="$PROJECT_DIR$/src/finalproject/CheckOptionsPanel.java" />
+        <option value="$PROJECT_DIR$/src/finalproject/DartsPanel.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="483" />
+    <option name="x" value="341" />
+    <option name="y" value="21" />
     <option name="width" value="1827" />
     <option name="height" value="1932" />
   </component>
@@ -117,7 +198,17 @@
             <path>
               <item name="BankingSystemWithDarts" type="b2602c69:ProjectViewProjectNode" />
               <item name="BankingSystemWithDarts" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BankingSystemWithDarts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BankingSystemWithDarts" type="462c0819:PsiDirectoryNode" />
               <item name="nbproject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BankingSystemWithDarts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BankingSystemWithDarts" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="BankingSystemWithDarts" type="b2602c69:ProjectViewProjectNode" />
@@ -139,7 +230,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566503992569" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566614481456" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
@@ -203,6 +294,35 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49698433" visible="true" weight="0.3298647" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49939686" weight="0.39958376" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3298647" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5030157" side_tool="true" visible="true" weight="0.3298647" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4963812" weight="0.3298647" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26176116" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Learn" order="6" />
+      <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3298647" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39958376" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -220,20 +340,13 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/image/ImageObserver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/finalproject/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -251,10 +364,142 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/finalproject/FinalProject.java">
+    <entry file="file://$PROJECT_DIR$/src/finalproject/img/board1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/finalproject/img/bg.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/image/ReplicateScaleFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/image/AreaAveragingScaleFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+          <folding>
+            <element signature="e#2510#2511#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4050">
+          <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/javax/swing/ImageIcon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="378" column="16" selection-start-line="378" selection-start-column="16" selection-end-line="378" selection-end-column="16" />
+          <folding>
+            <element signature="e#11640#11641#0" expanded="true" />
+            <element signature="e#11673#11674#0" expanded="true" />
+            <element signature="e#11859#11860#0" expanded="true" />
+            <element signature="e#11887#11888#0" expanded="true" />
+            <element signature="e#12463#12464#0" expanded="true" />
+            <element signature="e#12497#12498#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/Dimension.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="120" column="11" selection-start-line="120" selection-start-column="11" selection-end-line="120" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/finalproject/img/hand7.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/image/DirectColorModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15015">
+          <caret line="1031" selection-start-line="1031" selection-end-line="1031" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/image/Raster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="466" selection-start-line="466" selection-end-line="466" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/image/DataBufferInt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/awt/Graphics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="100" column="37" selection-start-line="100" selection-start-column="30" selection-end-line="100" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/applet/AudioClip.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <caret line="41" column="9" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/net/URL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="592" selection-start-line="592" selection-end-line="592" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/applet/Applet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="327" column="21" selection-start-line="327" selection-start-column="21" selection-end-line="327" selection-end-column="21" />
+          <folding>
+            <element signature="e#10337#10338#0" expanded="true" />
+            <element signature="e#10396#10397#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/finalproject/CheckingAccount.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="796" column="34" selection-start-line="796" selection-start-column="34" selection-end-line="796" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/finalproject/CheckOptionsPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="147" column="41" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/finalproject/FinalProject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="35" column="48" lean-forward="true" selection-start-line="35" selection-start-column="48" selection-end-line="35" selection-end-column="48" />
           <folding>
             <element signature="e#0#1338#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -262,19 +507,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/finalproject/DartsPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/finalproject/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="78" column="19" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
+        <state relative-caret-position="405">
+          <caret line="46" column="39" lean-forward="true" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/finalproject/CheckOptionsPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/finalproject/DartsPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="78" column="92" selection-start-line="78" selection-start-column="92" selection-end-line="78" selection-end-column="92" />
+        <state relative-caret-position="106">
+          <caret line="830" selection-start-line="830" selection-end-line="830" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#25407#25408#0" expanded="true" />
+            <element signature="e#34227#34228#0" expanded="true" />
+            <element signature="e#39819#39820#0" expanded="true" />
           </folding>
         </state>
       </provider>

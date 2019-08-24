@@ -13,36 +13,25 @@ package finalproject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Vector;
 
-public class CheckOptionsPanel extends JFrameL //CheckOptionFrame(now a frame not a panel
+class CheckOptionsPanel extends JFrameL //CheckOptionFrame(now a frame not a panel
 {
-    private JMenu fileMenu, acctMenu, transMenu, misc;
-    private JMenuItem readFile, writeFile, addAcct, listAcctTrans, listCheck, 
-                      listDep, findAcct, listAcct, addTrans, playDarts;
     private JMenuBar bar;
-    private final String readFileStr = "Load File", writeFileStr = "Save File",
-            addTransStr = "Add Transactions", addAcctStr = "Add New Account", 
-            listAcctTransStr = "List Account Transactions",
-            listCheckStr = "List All Checks", listDepStr = "List All Deposits",
-            findAcctStr = "Find Account", fileStr = "File", acctStr = "Account",
-            listingAcctStr = "List All Accounts", transStr = "Transactions", 
-            miscStr = "Misc.", dartsStr = "Play Darts!";
-    private final String emptyList = "No accounts on file!\nUse Add Account "
-                            + "option to start a new database\nor use Load File "
-                            + "option to open a database.";
+    private final String readFileStr = "Load File";
+    private final String writeFileStr = "Save File";
+    private final String addTransStr = "Add Transactions";
+    private final String addAcctStr = "Add New Account";
+    private final String listAcctTransStr = "List Account Transactions";
+    private final String listCheckStr = "List All Checks";
+    private final String listDepStr = "List All Deposits";
+    private final String findAcctStr = "Find Account";
+    private final String listingAcctStr = "List All Accounts";
+    private final String dartsStr = "Play Darts!";
 
-    private class MenuContent {
-        public JMenu menu;
-        public Vector<JMenuItem> items;
-        MenuContent(String name){
-            this.menu = new JMenu(name);
-            this.items = new Vector<>();
-        }
-    }
-
-   //-----------------------------------------------------------------
+    //-----------------------------------------------------------------
    //  Sets up a panel with a label and a set of radio buttons
    //  that present options to the user.
    //-----------------------------------------------------------------
@@ -52,23 +41,18 @@ public class CheckOptionsPanel extends JFrameL //CheckOptionFrame(now a frame no
         super(title);
         MenuListener ml = new MenuListener();
 
-        Vector<MenuContent> menuContent = new Vector<>();
-//        Vector<JMenuItem> fileMenuItems = new Vector<>(Arrays.asList(readFile, writeFile));
-//        Vector<JMenuItem> acctMenuItems = new Vector<>(Arrays.asList(addAcct, findAcct, listAcct));
-//        Vector<JMenuItem> transMenuItems = new Vector<>(Arrays.asList(listAcctTrans, addTrans, listDep, listCheck));
-//        Vector<JMenuItem> miscItems = new Vector<>(Arrays.asList(playDarts));
-//        menuContent.addElement(new MenuContent(fileMenu, fileMenuItems, fileStr));
-//        menuContent.addElement(new MenuContent(acctMenu, acctMenuItems, acctStr));
-//        menuContent.addElement(new MenuContent(transMenu, transMenuItems, transStr));
-//        menuContent.addElement(new MenuContent(misc, miscItems, miscStr));
+        String fileStr = "File";
         Vector<String> fileMenuStrs = new Vector<>(Arrays.asList(fileStr, readFileStr, writeFileStr));
+        String acctStr = "Account";
         Vector<String> acctMenuStrs = new Vector<>(Arrays.asList(acctStr, addAcctStr, findAcctStr, listingAcctStr));
+        String transStr = "Transactions";
         Vector<String> tranMenuStrs = new Vector<>(Arrays.asList(transStr, listAcctTransStr, addTransStr, listDepStr, listCheckStr));
+        String miscStr = "Misc.";
         Vector<String> miscMenuStrs = new Vector<>(Arrays.asList(miscStr, dartsStr));
         Vector<JMenu> menuItems = new Vector<>();
         Vector<Vector<String>> menuStrs = new Vector<>(Arrays.asList(fileMenuStrs, acctMenuStrs, tranMenuStrs, miscMenuStrs));
 
-        // Itterate through list to create list of JMenu objects
+        // Iterate through list to create list of JMenu objects
         final int fontSize = 12*Toolkit.getDefaultToolkit().getScreenSize().width/dim.width;
         menuStrs.forEach((vec) -> {
             JMenu menu = new JMenu(vec.elementAt(0));
@@ -98,11 +82,16 @@ public class CheckOptionsPanel extends JFrameL //CheckOptionFrame(now a frame no
     {
         public void actionPerformed (ActionEvent event)
         {
+            final String source = event.getActionCommand();
+            final String emptyList = "No accounts on file!\nUse Add Account "
+                    + "option to start a new database\nor use Load File "
+                    + "option to open a database.";
             // Keeps Main frame suppressed when dart game is launched
             boolean keepInvisible = false;
-            final String source = event.getActionCommand();
 
+            // When made visible the frame will be updated with changes
             Main.frame.setVisible(false);
+            // Determines which menu item was selected
             switch(source) {
                 case readFileStr:
                     CheckingAccount.readFile();
